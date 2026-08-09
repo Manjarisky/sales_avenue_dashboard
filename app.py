@@ -91,7 +91,31 @@ fig_revenue.update_layout(
 )
 
 st.plotly_chart(fig_revenue, use_container_width=True)
+# -------------------------
+# Sales by Category
+# -------------------------
+st.subheader("📊 Sales by Category")
 
+category_sales = (
+    filtered_df.groupby("Category", as_index=False)["Sales"]
+    .sum()
+    .sort_values("Sales", ascending=False)
+)
+
+fig_category = px.bar(
+    category_sales,
+    x="Category",
+    y="Sales",
+    title="Sales by Category",
+    text="Sales"
+)
+
+fig_category.update_layout(
+    xaxis_title="Category",
+    yaxis_title="Sales"
+)
+
+st.plotly_chart(fig_category, use_container_width=True)
 # -------------------------
 # Top Products
 # -------------------------
