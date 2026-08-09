@@ -1,20 +1,22 @@
 
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
-# Page settings
 st.set_page_config(
     page_title="Sales & Revenue Dashboard",
     page_icon="📊",
     layout="wide"
 )
 
-# Title
 st.title("📊 Sales & Revenue Dashboard")
 st.write("Analyze sales, revenue, products, and regions.")
 
 # Load data
 df = pd.read_csv("sales_data.csv")
+
+# Convert Date column
+df["Date"] = pd.to_datetime(df["Date"])
 
 # Calculate KPIs
 total_sales = df["Sales"].sum()
@@ -33,6 +35,29 @@ with col2:
 with col3:
     st.metric("📦 Total Quantity", f"{total_quantity:,}")
 
-# Show data
+# Revenue trend
+st.subheader("📈 Revenue Trend")
+
+revenue_by_date = df.groupby("Date", as_index=False)["Revenue"].sum()
+
+fig = px.line(
+    revenue_by_date,
+    x="Date",
+    y="Revenue",
+    markers=True,
+    title="Revenue Over Time"
+)
+
+fig.update_layout(
+    xaxis_title="Date",
+    yaxis_title="Revenue",
+    hovermode="x unified"
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+# Sales data
 st.subheader("Sales Data")
 st.dataframe(df, use_container_width=True)
+
+
