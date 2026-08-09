@@ -42,7 +42,7 @@ sales-revenue-dashboard/
 ```
 
 ## 📊 Dashboard
-
+![Sales & Revenue Dashboard](revenue_dashboard.png)
 The dashboard provides an interactive view of sales and revenue performance.
 
 Users can filter the data by:
