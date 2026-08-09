@@ -29,7 +29,16 @@ selected_category = st.sidebar.selectbox("Category", category_options)
 
 region_options = ["All"] + sorted(df["Region"].unique().tolist())
 selected_region = st.sidebar.selectbox("Region", region_options)
+# Date filter
+min_date = df["Date"].min().date()
+max_date = df["Date"].max().date()
 
+selected_dates = st.sidebar.date_input(
+    "Date Range",
+    value=(min_date, max_date),
+    min_value=min_date,
+    max_value=max_date
+)
 # Apply filters
 filtered_df = df.copy()
 
@@ -47,7 +56,13 @@ if selected_region != "All":
     filtered_df = filtered_df[
         filtered_df["Region"] == selected_region
     ]
+if len(selected_dates) == 2:
+    start_date, end_date = selected_dates
 
+    filtered_df = filtered_df[
+        (filtered_df["Date"].dt.date >= start_date)
+        & (filtered_df["Date"].dt.date <= end_date)
+    ]
 # -------------------------
 # KPIs
 # -------------------------
