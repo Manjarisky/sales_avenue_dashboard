@@ -17,15 +17,44 @@ df = pd.read_csv("sales_data.csv")
 df["Date"] = pd.to_datetime(df["Date"])
 
 # -------------------------
-# KPI calculations
+# Sidebar Filters
 # -------------------------
-total_sales = df["Sales"].sum()
-total_revenue = df["Revenue"].sum()
-total_quantity = df["Quantity"].sum()
+st.sidebar.header("🔍 Filters")
+
+product_options = ["All"] + sorted(df["Product"].unique().tolist())
+selected_product = st.sidebar.selectbox("Product", product_options)
+
+category_options = ["All"] + sorted(df["Category"].unique().tolist())
+selected_category = st.sidebar.selectbox("Category", category_options)
+
+region_options = ["All"] + sorted(df["Region"].unique().tolist())
+selected_region = st.sidebar.selectbox("Region", region_options)
+
+# Apply filters
+filtered_df = df.copy()
+
+if selected_product != "All":
+    filtered_df = filtered_df[
+        filtered_df["Product"] == selected_product
+    ]
+
+if selected_category != "All":
+    filtered_df = filtered_df[
+        filtered_df["Category"] == selected_category
+    ]
+
+if selected_region != "All":
+    filtered_df = filtered_df[
+        filtered_df["Region"] == selected_region
+    ]
 
 # -------------------------
-# KPI cards
+# KPIs
 # -------------------------
+total_sales = filtered_df["Sales"].sum()
+total_revenue = filtered_df["Revenue"].sum()
+total_quantity = filtered_df["Quantity"].sum()
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -42,7 +71,10 @@ with col3:
 # -------------------------
 st.subheader("📈 Revenue Trend")
 
-revenue_by_date = df.groupby("Date", as_index=False)["Revenue"].sum()
+revenue_by_date = (
+    filtered_df.groupby("Date", as_index=False)["Revenue"]
+    .sum()
+)
 
 fig_revenue = px.line(
     revenue_by_date,
@@ -61,12 +93,12 @@ fig_revenue.update_layout(
 st.plotly_chart(fig_revenue, use_container_width=True)
 
 # -------------------------
-# Top Performing Products
+# Top Products
 # -------------------------
 st.subheader("🏆 Top-Performing Products")
 
 product_sales = (
-    df.groupby("Product", as_index=False)["Sales"]
+    filtered_df.groupby("Product", as_index=False)["Sales"]
     .sum()
     .sort_values("Sales", ascending=False)
 )
@@ -87,10 +119,10 @@ fig_products.update_layout(
 st.plotly_chart(fig_products, use_container_width=True)
 
 # -------------------------
-# Sales Data
+# Filtered Data
 # -------------------------
-st.subheader("Sales Data")
-st.dataframe(df, use_container_width=True)
+st.subheader("📋 Filtered Sales Data")
+st.dataframe(filtered_df, use_container_width=True)
 
 
 
