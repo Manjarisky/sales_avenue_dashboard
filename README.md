@@ -69,7 +69,7 @@ This helps users quickly understand sales performance and identify areas that ar
 Clone the repository:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/Manjarisky/sales_avenue_dashboard
 ```
 
 Open the project folder:
