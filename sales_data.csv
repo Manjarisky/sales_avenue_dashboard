@@ -1,0 +1,13 @@
+Date,Product,Category,Quantity,Sales,Revenue,Region
+2026-01-05,Laptop,Electronics,2,1200,1200,South
+2026-01-08,Phone,Electronics,5,2500,2500,East
+2026-01-12,Chair,Furniture,3,450,450,West
+2026-01-15,Table,Furniture,2,700,700,South
+2026-01-20,Headphones,Electronics,10,800,800,North
+2026-02-03,Laptop,Electronics,3,1800,1800,East
+2026-02-10,Phone,Electronics,4,2000,2000,South
+2026-02-14,Chair,Furniture,5,750,750,North
+2026-02-22,Table,Furniture,3,1050,1050,West
+2026-03-05,Headphones,Electronics,15,1200,1200,South
+2026-03-12,Laptop,Electronics,4,2400,2400,North
+2026-03-18,Phone,Electronics,6,3000,3000,East
