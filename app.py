@@ -186,6 +186,74 @@ st.plotly_chart(fig_region, use_container_width=True)
 # -------------------------
 st.subheader("📋 Filtered Sales Data")
 st.dataframe(filtered_df, use_container_width=True)
+# -------------------------
+# Business Insights
+# -------------------------
+st.subheader("💡 Business Insights")
+
+if not filtered_df.empty:
+
+    best_product = (
+        filtered_df.groupby("Product")["Sales"]
+        .sum()
+        .idxmax()
+    )
+
+    best_product_sales = (
+        filtered_df.groupby("Product")["Sales"]
+        .sum()
+        .max()
+    )
+
+    best_region = (
+        filtered_df.groupby("Region")["Sales"]
+        .sum()
+        .idxmax()
+    )
+
+    best_region_sales = (
+        filtered_df.groupby("Region")["Sales"]
+        .sum()
+        .max()
+    )
+
+    best_category = (
+        filtered_df.groupby("Category")["Sales"]
+        .sum()
+        .idxmax()
+    )
+
+    best_category_sales = (
+        filtered_df.groupby("Category")["Sales"]
+        .sum()
+        .max()
+    )
+
+    insight_col1, insight_col2, insight_col3 = st.columns(3)
+
+    with insight_col1:
+        st.info(
+            f"🏆 **Top Product**\n\n"
+            f"{best_product}\n\n"
+            f"Sales: ₹{best_product_sales:,.0f}"
+        )
+
+    with insight_col2:
+        st.info(
+            f"🌍 **Top Region**\n\n"
+            f"{best_region}\n\n"
+            f"Sales: ₹{best_region_sales:,.0f}"
+        )
+
+    with insight_col3:
+        st.info(
+            f"📊 **Top Category**\n\n"
+            f"{best_category}\n\n"
+            f"Sales: ₹{best_category_sales:,.0f}"
+        )
+
+else:
+    st.warning("No data available for the selected filters.")
 
 
 
