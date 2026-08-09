@@ -1,4 +1,4 @@
-```python
+
 import streamlit as st
 import pandas as pd
 
@@ -36,4 +36,3 @@ with col3:
 # Show data
 st.subheader("Sales Data")
 st.dataframe(df, use_container_width=True)
-```
