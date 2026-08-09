@@ -1,4 +1,4 @@
-```python
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -91,7 +91,6 @@ st.plotly_chart(fig_products, use_container_width=True)
 # -------------------------
 st.subheader("Sales Data")
 st.dataframe(df, use_container_width=True)
-```
 
 
 
