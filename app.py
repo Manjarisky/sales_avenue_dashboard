@@ -156,7 +156,31 @@ fig_products.update_layout(
 )
 
 st.plotly_chart(fig_products, use_container_width=True)
+# -------------------------
+# Sales by Region
+# -------------------------
+st.subheader("🌍 Sales by Region")
 
+region_sales = (
+    filtered_df.groupby("Region", as_index=False)["Sales"]
+    .sum()
+    .sort_values("Sales", ascending=False)
+)
+
+fig_region = px.bar(
+    region_sales,
+    x="Region",
+    y="Sales",
+    title="Sales by Region",
+    text="Sales"
+)
+
+fig_region.update_layout(
+    xaxis_title="Region",
+    yaxis_title="Sales"
+)
+
+st.plotly_chart(fig_region, use_container_width=True)
 # -------------------------
 # Filtered Data
 # -------------------------
